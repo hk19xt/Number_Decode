@@ -21,10 +21,13 @@ public class Number_Decode {
             return 0;
         }
 
-        int result = helper(userInput, length-1);
+        //The first case: 27345 => "27" cannot be decoded, so we don't care about it. We only calculate "2","7345" in this case. 
+        int result = helper(userInput, length-1); //"7345" is the length - 1.
         
-        if(Integer.parseInt(userInput.substring(start,start+2))<=26 && length>=2){
-            result = result + helper(userInput, length-2);
+        //The second case: 21345 => "21" can be decoded, so we should consider it in two ways. "2", "1345" (-> the first case already cover it) and "21", "345" in this case.
+        if(Integer.parseInt(userInput.substring(start,start+2))<=26 && length>=2){ //Check two conditions: 1) whether the length is bigger and equal to 2, 
+            //2) two digits are less and equal to 26 (since the number of decoding alphabet is upto 26) 
+            result = result + helper(userInput, length-2); //"345" is the length - 2.
         }
         return result;
 
